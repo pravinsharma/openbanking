@@ -2,20 +2,16 @@ const transaction_service = require('./service/transactions/transactions')
 var express = require('express')
 var app = express()
 
-
 /* ---------VIEW ROUTER--------- */
 
 // all views
 app.get('/*', function (req, res) {
-    myapp.log(req.url + '...');
+    console.log(req.url + '...');
 
     if (req.url == '/apiservice/rewards/transactions') {
-
-        myapp.log('action: get all transactions...');
-
+        console.log('action: get all transactions...');
         
         var transactions = transaction_service.getTransactions();
-        //myapp.log('transactions', transactions);
         
         transactions.then(function (documents) {
             var statusCode = 200;
@@ -34,27 +30,3 @@ app.get('/*', function (req, res) {
 });
 
 app.listen(8080);
-
-
-/* ---------GLOBAL VARS/UTILITIES--------- */
-
-var myapp = {
-    "switch": {      // add capability switches
-        "log":  true,
-        "debug": true
-    },
-    "log": function() {      // console log capability
-        for (var i = 0; i < arguments.length; i++) {
-            if( myapp.switch.log ) {
-                console.log(arguments[i]);
-            }
-        }
-    },
-    "debug": function() {      // console debug capability
-        for (var i = 0; i < arguments.length; i++) {
-            if( myapp.switch.debug ) {
-                console.debug(arguments[i]);
-            }
-        }
-    }
-};

@@ -17,12 +17,10 @@ app.get('/*', function (req, res) {
     myapp.log(req.url + '...');
 
     if (req.url == '/apiservice/rewards/report') {
-
         myapp.log('action: get user reports...');
 
         const userid = req.body.userid;
-        
-        myapp.log('A chunk of data has arrived: ', userid);
+        myapp.log('userId: ', userid);
 
         request({
 
@@ -43,7 +41,6 @@ app.get('/*', function (req, res) {
             }
         });
     } else {
-
         var statusCode = 404;
 
         res.writeHead(statusCode);
