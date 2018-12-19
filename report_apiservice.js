@@ -22,24 +22,31 @@ app.get('/*', function (req, res) {
         const userid = req.body.userid;
         myapp.log('userId: ', userid);
 
-        request({
+        if( !userid ) {
+            res.writeHead(200);
+            res.end( JSON.stringify({"error": "userid not supplied..."}) );
+            res.end();
+            console.error.bind(console, 'Userid is not supplied...');
+        } else {
+            request({
 
-            url: myapp.url,
-            json: true
-        }, function (error, response, transactions) {
-        
-            if (!error && response.statusCode === 200) {
-                myapp.log('transactions', transactions) // Print the json response
+                url: myapp.url,
+                json: true
+            }, function (error, response, transactions) {
+            
+                if (!error && response.statusCode === 200) {
+                    myapp.log('transactions', transactions) // Print the json response
 
-                const report = report_service.getReport( transactions, userid );
+                    const report = report_service.getReport( transactions, userid );
 
-                var statusCode = 200;
-                var payload = JSON.stringify( report );
+                    var statusCode = 200;
+                    var payload = JSON.stringify( report );
 
-                res.writeHead(statusCode);
-                res.end( payload );
-            }
-        });
+                    res.writeHead(statusCode);
+                    res.end( payload );
+                }
+            });
+        }
     } else {
         var statusCode = 404;
 
