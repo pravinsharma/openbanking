@@ -26,46 +26,70 @@ app.get('/*', function (req, res) {
             res.writeHead(200);
             res.end( JSON.stringify({"error": "userid not supplied..."}) );
             res.end();
-            console.error.bind(console, 'Userid is not supplied...');
+            myapp.error('Userid is not supplied...');
         } else {
+
+            /* get transactions */
             request({
 
-                url: myapp.url,
+                url: myapp.url.transaction_api,
                 json: true
             }, function (error, response, transactions) {
             
                 if (!error && response.statusCode === 200) {
                     myapp.log('transactions', transactions) // Print the json response
 
-                    const report = report_service.getReport( transactions, userid );
+                    /* get reward point mappings */
+                    request({
 
-                    var statusCode = 200;
-                    var payload = JSON.stringify( report );
-
-                    res.writeHead(statusCode);
-                    res.end( payload );
+                        url: myapp.url.pointsmap_api,
+                        json: true
+                    }, function (error, response, pointsmap) {
+                    
+                        if (!error && response.statusCode === 200) {
+                            myapp.log('pointsmap', pointsmap) // Print the json response
+        
+                            const report = report_service.getReport( pointsmap, userid );
+        
+                            var statusCode = 200;
+                            var payload = JSON.stringify( report );
+        
+                            res.writeHead(statusCode);
+                            res.end( payload );
+                        } else {
+                            res.writeHead(response.statusCode);
+                            myapp.error(error);
+                            res.end();
+                        }
+                    });
+                } else {
+                    res.writeHead(response.statusCode);
+                    myapp.error(error);
+                    res.end();
                 }
             });
         }
     } else {
-        var statusCode = 404;
-
-        res.writeHead(statusCode);
+        res.writeHead(404);
         res.end();
     }
 });
 
-app.listen(8081);
+app.listen(8080);
 
 
 /* ---------GLOBAL VARS/UTILITIES--------- */
 
 var myapp = {
-    "url": "http://localhost:8080/apiservice/rewards/transactions",
+    "url": {
+        "transaction_api": "http://localhost:8081/apiservice/rewards/transactions",
+        "pointsmap_api": "http://localhost:8082/apiservice/rewards/pointsmap"
+    },
 
     "switch": {      // add capability switches
         "log":  true,
-        "debug": true
+        "debug": true,
+        "error": true
     },
 
     "log": function() {      // console log capability
@@ -80,6 +104,14 @@ var myapp = {
         for (var i = 0; i < arguments.length; i++) {
             if( myapp.switch.debug ) {
                 console.debug(arguments[i]);
+            }
+        }
+    },
+
+    "error": function() {      // console debug capability
+        for (var i = 0; i < arguments.length; i++) {
+            if( myapp.switch.debug ) {
+                console.error.bind(console, arguments[i]);
             }
         }
     }
