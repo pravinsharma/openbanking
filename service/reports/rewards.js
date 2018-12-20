@@ -1,16 +1,16 @@
 var rewards = {
     
     // get filtered report with total
-    getReport: ( rewardArray, userId )  => {
-        if(!rewardArray || rewardArray.length == 0)      //mandatory fields check
+    getReport: ( transactions, userId )  => {
+        if( !transactions || transactions.length == 0 )      //mandatory fields check
             return false;
         
-        console.log('getReport... data:', rewardArray, 'userId:', userId);
+        console.log('getReport... data:', transactions, 'userId:', userId);
     
         // form records for a user only
-        const user_rewards = rewardArray.filter( reward => reward.userid == userId).map( reward => ({
+        const user_rewards = transactions.filter( reward => reward.userid == userId).map( reward => ({
             points: reward.points,
-            operation: reward.operation
+            transid: reward._id
         }));
 
         // calculate the total points accrued

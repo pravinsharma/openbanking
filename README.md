@@ -41,133 +41,160 @@ db.transaction.drop()
 db.transaction.insertMany([
     {
         "_id":  100,
-        "points": 1,
-        "operation": "daily usage",
-        "info": "",
+        "t": "cb",
+        "s": "halifax",
+        "d": "lloyds",
         "timestamp": "10/12/2018 12:42:00",
-        "userid": 1011,
-        "transactionid": 23456
+        "a": 1500,
+        "userid": 1011
     },
     {
         "_id":  101,
-        "points": 10,
-        "operation": "transaction",
-        "info": "bank:hsbc - cc:icici",
+        "t": "cb",
+        "s": "icici",
+        "d": "lloyds",
         "timestamp": "10/09/2018 22:02:00",
-        "userid": 1001,
-        "transactionid": 11456
+        "a": 2800,
+        "userid": 1001
     },
     {
         "_id":  102,
-        "points": 30,
-        "operation": "transaction",
-        "info": "bank:lloyds - cc:icici",
+        "t": "cc",
+        "s": "hsbc",
+        "d": "lloyds",
         "timestamp": "21/09/2018 02:02:00",
-        "userid": 1001,
-        "transactionid": 3461
+        "a": 5500,
+        "userid": 1001
     },
     {
         "_id":  103,
-        "points": 100,
-        "operation": "transfer",
-        "info": "transfered cc:icici - cc:lloyds",
+        "t": "bb",
+        "s": "hdfc",
+        "d": "halifax",
         "timestamp": "10/01/2016 22:02:00",
-        "userid": 1101,
-        "transactionid": 346212
+        "a": 10000,
+        "userid": 1101
     },
     {
         "_id":  104,
-        "points": 300,
-        "operation": "recommendation",
-        "info": "account open bank:lloyds",
+        "t": "cc",
+        "s": "halifax",
+        "d": "hsbc",
         "timestamp": "10/02/2018 16:02:00",
-        "userid": 1001,
-        "transactionid": 246212
+        "a": 12700,
+        "userid": 1001
     },
     {
         "_id":  105,
-        "points": 50,
-        "operation": "megaday",
-        "info": "bank:hdfc - cc:icici",
+        "t": "c",
+        "s": "lloyds",
         "timestamp": "17/02/2018 14:02:00",
-        "userid": 1001,
-        "transactionid": 2461212
+        "userid": 1001
+    },
+    {
+        "_id":  106,
+        "t": "b",
+        "s": "lloyds",
+        "timestamp": "17/02/2018 14:02:00",
+        "a": 4000,
+        "userid": 1001
     }
 ])
 
 db.pointsmap.insertMany([
     {
         "_id":  1,
-        "type": "cc_lloyds",
-        "base": 100,
-        "slab": [
-            {
-                "l":  100000,
-                "h": 1500000,
-                "m": 1
-            },
-            {
-                "l": 1500001,
-                "h": 10000000,
-                "m": 1.5
-            },
-            {
-                "l": 10000001,
-                "m": 3
-            }
-        ]
+        "t": "c",
+        "s": ["lloyds", "halifax"],
+        "base": 100
     },
     {
         "_id":  2,
-        "type": "cc_hsbc",
-        "base": 50,
+        "t": "c",
+        "s": ["hsbc"],
+        "base": 10
+    },
+    {
+        "_id":  3,
+        "t": "cc",
+        "d": ["lloyds", "halifax"],
+        "base": 150,
         "slab": [
             {
-                "l":  100000,
-                "h": 1500000,
-                "m": 1
-            },
-            {
-                "l": 1500001,
-                "h": 10000000,
+                "l": 10000,
+                "h": 50000,
                 "m": 1.5
             },
             {
-                "l": 10000001,
+                "l": 50001,
+                "h": 100000,
                 "m": 3
+            },
+            {
+                "l": 100001,
+                "m": 4
             }
         ]
     },
     {
-        "_id":  3,
-        "type": "cc_oth",
-        "base": 1
-    },
-    {
         "_id":  4,
-        "type": "cb_oth",
-        "base": 10
+        "t": "cc",
+        "d": ["hsbc"],
+        "base": 50,
+        "slab": [
+            {
+                "l": 10000,
+                "h": 50000,
+                "m": 1.5
+            },
+            {
+                "l": 50001,
+                "h": 100000,
+                "m": 3
+            },
+            {
+                "l": 100001,
+                "m": 4
+            }
+        ]
     },
     {
         "_id":  5,
-        "type": "cb_lloyds",
-        "base": 100,
+        "t": "b",
+        "s": ["lloyds", "halifax"],
+        "base": 150,
         "slab": [
             {
-                "l": 1500001,
-                "h": 10000000,
-                "m": 1
+                "l": 10000,
+                "h": 50000,
+                "m": 1.5
             },
             {
-                "l": 10000001,
-                "m": 2
+                "l": 50001,
+                "h": 100000,
+                "m": 3
+            },
+            {
+                "l": 100001,
+                "m": 4
             }
         ]
     },
     {
         "_id":  6,
-        "type": "c_lloyds",
-        "base": 200
+        "t": "cc",
+        "base": 2
+    },
+    {
+        "_id":  7,
+        "t": "cb",
+        "d": ["lloyds", "halifax"],
+        "base": 50
+    },
+    {
+        "_id":  8,
+        "t": "bb",
+        "base": 10
     }
 ])
 ```

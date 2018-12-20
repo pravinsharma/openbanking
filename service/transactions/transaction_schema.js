@@ -3,13 +3,13 @@ var Schema = mongoose.Schema;
 
 // define a schema
 var transactionSchema = new Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    points: Number,
-    operation: String,
-    info: String,
+    _id: Number,
+    t: String,
+    s: String,
+    d: String,
     timestamp: String,
-    userid: Number,
-    transactionid: Number
+    a: Number,
+    userid: Number
 }, { collection : 'transaction' });
 
-module.exports = mongoose.model('transaction', transactionSchema); 
+module.exports = mongoose.model('transaction', transactionSchema);

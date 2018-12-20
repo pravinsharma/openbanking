@@ -3,8 +3,10 @@ var Schema = mongoose.Schema;
 
 // define a schema
 var pointsmapSchema = new Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    type: String,
+    _id: Number,
+    t: String,
+    s: [String],
+    d: [String],
     base: Number,
     slab: [{
         l: Number,
@@ -13,4 +15,4 @@ var pointsmapSchema = new Schema({
     }]
 }, { collection : 'pointsmap' });
 
-module.exports = mongoose.model('pointsmap', pointsmapSchema); 
+module.exports = mongoose.model('pointsmap', pointsmapSchema);
