@@ -1,4 +1,5 @@
 const pointsmap_service = require('./service/pointsmap/pointsmap')
+var log = require('./utils/log')
 var express = require('express')
 var app = express()
 
@@ -6,10 +7,10 @@ var app = express()
 
 // all views
 app.get('/*', function (req, res) {
-    console.log(req.url + '...');
+    log.info(req.url + '...');
 
     if (req.url == '/apiservice/rewards/pointsmap') {
-        console.log('action: get all mapping for the points...');
+        log.debug('action: get all mapping for the points...');
         
         var pointsmap = pointsmap_service.getMaps();
         

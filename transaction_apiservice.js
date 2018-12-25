@@ -1,4 +1,5 @@
 const transaction_service = require('./service/transactions/transactions')
+var log = require('./utils/log')
 var express = require('express')
 var app = express()
 
@@ -6,10 +7,10 @@ var app = express()
 
 // all views
 app.get('/*', function (req, res) {
-    console.log(req.url + '...');
+    log.info(req.url + '...');
 
     if (req.url == '/apiservice/rewards/transactions') {
-        console.log('action: get all transactions...');
+        log.debug('action: get all transactions...');
         
         var transactions = transaction_service.getTransactions();
         
