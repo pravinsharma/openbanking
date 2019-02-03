@@ -1,42 +1,77 @@
 # openbanking
 
-## create database
+## Docker
+> get latest from docker repo
+
+`docker pull mongo:latest`
+
+> it - interactive mode, d - detached
+
+`docker run -it -d mongo`
+
+> list all running processes
+
+`docker ps`
+
+> container must be stopped before removing it
+
+`docker stop my_container`
+
+> container can be started if it exists
+
+`docker start my_container`
+
+> container can be removed
+
+`docker rm my_container`
+
+> p - port mapping, d - daemon, name - name the conatiner
+
+`docker run --name mongo -d -p 27017:27017 mongo:latest`
+
+> execute interactive terminal for mongo container
+
+`docker exec -it mongo /bin/bash`
+
+
+## Mongo
+### create database
 ```
 use openbanking
 ```
 
-## drop database
+### drop database
 ```
 use openbanking
 db.dropDatabase()
 ```
 
-## list all databases
+### list all databases
 ```
 show dbs
 ```
 
-## list all collections for current database
+### list all collections for current database
 ```
 show collections 	
 ```
 
-## list users for current database
+### list users for current database
 ```
 show users
 ```
 
-## list all roles, both user-defined and built-in, for the current database
+### list all roles, both user-defined and built-in, for the current database
 ```
 show roles
 ```
 
-## drop collection
+### drop collection
 ```
 db.transaction.drop()
 ```
 
-## insert into schema
+### insert into schema
 ```
 db.transaction.insertMany([
     {
@@ -199,12 +234,12 @@ db.pointsmap.insertMany([
 ])
 ```
 
-## list from collection
+### list from collection
 ```
 db.transaction.find().pretty()
 ```
 
-## update the collection
+### update the collection
 ```
 db.transaction.update({'_id': 104},{$set:{'points': 250}})
 ```
